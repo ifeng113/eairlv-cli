@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="ERROR">
+
+    <Properties>
+        <!--定义变量-->
+        <property name="LOG_HOME">/earilv/logs/</property>
+    </Properties>
+
+    <Appenders>
+        <Console name="C" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+        </Console>
+        <File name="E" fileName="${LOG_HOME}/error.log" bufferedIO="false" advertise="true">
+            <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+        </File>
+        <RollingFile name="R" fileName="${LOG_HOME}/web.log" filePattern="${LOG_HOME}/$${date:yyyy-MM}/%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <SizeBasedTriggeringPolicy size="10MB"/>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <Root level="INFO" includeLocation="true">
+            <AppenderRef ref="C"/>
+            <AppenderRef ref="E"/>
+            <AppenderRef ref="R"/>
+        </Root>
+    </Loggers>
+
+</Configuration>
